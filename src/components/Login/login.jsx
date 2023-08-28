@@ -26,8 +26,10 @@ export default function Login() {
   const onSubmit = (event) => {
     event.preventDefault();
     dispatch(loginUser(loginInput));
-    console.log("object", loginInput);
-    // alert("login Successfully!");
+    setLoginInput({
+      email: "",
+      password: "",
+    });
   };
   return (
     <>
@@ -42,10 +44,19 @@ export default function Login() {
             Sign In
           </h2>
         </div>
-
+        {authState.msg && (
+          <p className="mt-2 text-center text-sm text-green-500">
+            {authState.msg}
+          </p>
+        )}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           {/* <form className="space-y-6" action="#" method="POST"> */}
           <form className="space-y-6">
+            {authState.user && (
+              <p className="mt-2 text-center text-green-500 font-black">
+                Login Successfully!
+              </p>
+            )}
             <div>
               <label
                 htmlFor="email"
@@ -76,12 +87,12 @@ export default function Login() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a
+                  {/* <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
                     Forgot password?
-                  </a>
+                  </a> */}
                 </div>
               </div>
               <div className="mt-2">
@@ -96,8 +107,9 @@ export default function Login() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+
               {authState.error && (
-                <p className="mt-2 text-center text-sm text-red-500">
+                <p className="mt-2 text-center text-sm text-red-500 font-black">
                   {authState.error}
                 </p>
               )}

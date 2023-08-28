@@ -11,13 +11,30 @@ export default function Registration() {
     password: "",
   });
 
-  const [errorInput, setErrorInput] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
 
+  const [errorInput, setErrorInput] = useState(false);
   const dispatch = useDispatch();
 
   const onInputChange = (event) => {
     const nameData = event.target.name;
     const valueData = event.target.value;
+
+    if (nameData === "phone") {
+      const isValidPhone = /^\d{10}$/.test(valueData);
+      setIsPhoneValid(isValidPhone);
+    }
+    if (nameData === "email") {
+      const isValidEmail = /\S+@\S+\.\S+/.test(valueData);
+      setIsEmailValid(isValidEmail);
+    }
+    if (nameData === "password") {
+      const isValidPassword =
+        /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z\d]).{6,}$/.test(valueData);
+      setIsPasswordValid(isValidPassword);
+    }
     console.log("object", nameData, valueData);
     setFormInput((preInput) => {
       return {
@@ -26,6 +43,7 @@ export default function Registration() {
       };
     });
   };
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -59,16 +77,19 @@ export default function Registration() {
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkSeenCMOJii-F0MiUzKVOwBfB5HtrHEdJNAKKu7xoqxFHdl1PNwCsSCAQTqk4nZlp-RU&usqp=CAU"
             alt="Your Company"
           />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Registration
           </h2>
         </div>
-        {errorInput && (
-          <p className="text-red-500">Please fill in all the fields.</p>
-        )}
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+
+        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
           {/* <form className="space-y-6" action="#" method="POST"> */}
           <form className="space-y-6">
+            {errorInput && (
+              <p className="text-red-500 font-black">
+                Please fill in all the fields.
+              </p>
+            )}
             <div>
               <label
                 htmlFor="name"
@@ -83,7 +104,6 @@ export default function Registration() {
                   value={formInput.name}
                   type="text"
                   required
-                  maxLength="10"
                   onChange={onInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -96,6 +116,12 @@ export default function Registration() {
               >
                 Enter Your Contact
               </label>
+              {!isPhoneValid && (
+                <p className="text-red-500 font-bold">
+                  Phone number must contain exactly 10 digits.
+                </p>
+              )}
+
               <div className="mt-2">
                 <input
                   id="phone"
@@ -114,6 +140,11 @@ export default function Registration() {
               >
                 Email address
               </label>
+              {!isEmailValid && (
+                <p className="text-red-500 font-bold">
+                  Please enter a valid email address.
+                </p>
+              )}
               <div className="mt-2">
                 <input
                   id="email"
@@ -134,6 +165,13 @@ export default function Registration() {
               >
                 Password
               </label>
+              {!isPasswordValid && (
+                <p className="text-red-500 font-semibold">
+                  Password must contain at least 6 characters, including numeric
+                  digits, alphabetic characters, and symbols.
+                </p>
+              )}
+
               <div className="mt-2">
                 <input
                   id="password"
@@ -150,6 +188,7 @@ export default function Registration() {
             <div>
               <button
                 type="submit"
+                disabled={!isPhoneValid || !isEmailValid || !isPasswordValid}
                 onClick={onSubmitHandler}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >

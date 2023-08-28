@@ -11,7 +11,6 @@ const authReducer = (state = initialState, action) => {
       //   "auth",
       //   JSON.stringify({ ...state, user: action.payload })
       // );
-
       return {
         ...state,
         registrations: [...state.registrations, action.payload],

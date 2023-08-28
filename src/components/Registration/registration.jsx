@@ -29,7 +29,8 @@ export default function Registration() {
     console.log("SubmitHandler");
     dispatch(registerUser(formInput));
     alert("Registered successfully!");
-    console.log("object", formInput);
+
+    // console.log("object", formInput);
   };
 
   return (

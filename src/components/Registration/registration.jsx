@@ -11,6 +11,8 @@ export default function Registration() {
     password: "",
   });
 
+  const [errorInput, setErrorInput] = useState(false);
+
   const dispatch = useDispatch();
 
   const onInputChange = (event) => {
@@ -26,11 +28,26 @@ export default function Registration() {
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("SubmitHandler");
-    dispatch(registerUser(formInput));
-    alert("Registered successfully!");
 
-    // console.log("object", formInput);
+    if (
+      formInput.name === "" ||
+      formInput.phone === "" ||
+      formInput.email === "" ||
+      formInput.password === ""
+    ) {
+      setErrorInput(true);
+    } else {
+      setErrorInput(false);
+      dispatch(registerUser(formInput));
+      alert("Registered successfully!");
+      setFormInput({
+        name: "",
+        phone: "",
+        email: "",
+        password: "",
+      });
+    }
+    console.log("object", formInput);
   };
 
   return (
@@ -46,7 +63,9 @@ export default function Registration() {
             Registration
           </h2>
         </div>
-
+        {errorInput && (
+          <p className="text-red-500">Please fill in all the fields.</p>
+        )}
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           {/* <form className="space-y-6" action="#" method="POST"> */}
           <form className="space-y-6">
@@ -64,6 +83,7 @@ export default function Registration() {
                   value={formInput.name}
                   type="text"
                   required
+                  maxLength="10"
                   onChange={onInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

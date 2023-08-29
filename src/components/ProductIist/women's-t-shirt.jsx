@@ -5,7 +5,7 @@ const products = [
     href: "#",
     price: "$48",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-01.jpg",
+      "https://image.uniqlo.com/UQ/ST3/in/imagesgoods/457932/item/ingoods_61_457932.jpg?width=750",
     imageAlt:
       "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
   },
@@ -15,7 +15,7 @@ const products = [
     href: "#",
     price: "$35",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-02.jpg",
+      "https://assets.ajio.com/medias/sys_master/root/20220927/bM6x/63332fe0aeb269dbb3aafb41/-473Wx593H-441149347-yellow-MODEL.jpg",
     imageAlt:
       "Olive drab green insulated bottle with flared screw lid and flat top.",
   },
@@ -25,7 +25,7 @@ const products = [
     href: "#",
     price: "$89",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-03.jpg",
+      "https://assets.ajio.com/medias/sys_master/root/20230629/jWRf/649d0d51a9b42d15c923770e/-473Wx593H-466051006-black-MODEL.jpg",
     imageAlt:
       "Person using a pen to cross a task off a productivity paper card.",
   },
@@ -35,24 +35,23 @@ const products = [
     href: "#",
     price: "$35",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg",
+      "https://assets.ajio.com/medias/sys_master/root/20220921/b1df/632a2182f997dd1f8d0d7fb2/-473Wx593H-441147612-navy-MODEL.jpg",
     imageAlt:
       "Hand holding black machined steel mechanical pencil with brass tip and top.",
   },
   {
-    id: 1,
+    id: 5,
     name: "Basic Tee",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+      "https://assets.ajio.com/medias/sys_master/root/20230705/6fBk/64a544bdeebac147fc4eaae1/-473Wx593H-466250805-mauve-MODEL.jpg",
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
   },
-  // More products...
 ];
 
-export default function Productlist() {
+export default function WomenTShirts() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

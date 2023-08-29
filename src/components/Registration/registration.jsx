@@ -11,6 +11,7 @@ export default function Registration() {
     password: "",
   });
 
+  const [isValidName, setIsValidName] = useState(true);
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -26,6 +27,13 @@ export default function Registration() {
     const nameData = event.target.name;
     const valueData = event.target.value;
 
+    if (nameData === "name") {
+      const isValidName =
+        /^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/.test(
+          valueData
+        );
+      setIsValidName(isValidName);
+    }
     if (nameData === "phone") {
       const isValidPhone = /^\d{10}$/.test(valueData);
       setIsPhoneValid(isValidPhone);
@@ -111,6 +119,11 @@ export default function Registration() {
               >
                 Enter Your Name
               </label>
+              {!isValidName && (
+                <p className="text-red-500 font-bold">
+                  Cannot have a underscore, hypen or space at the start or end
+                </p>
+              )}
               <div className="mt-2">
                 <input
                   id="name"
@@ -118,6 +131,7 @@ export default function Registration() {
                   value={formInput.name}
                   type="text"
                   required
+                  maxLength="25"
                   onChange={onInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />

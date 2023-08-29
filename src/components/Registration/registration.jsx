@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { registerUser } from "../../actions/action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Registration() {
@@ -14,8 +14,11 @@ export default function Registration() {
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isEmailExists, setIsEmailExists] = useState(false);
 
   const [errorInput, setErrorInput] = useState(false);
+
+  const authState = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,6 +50,15 @@ export default function Registration() {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+
+    const isExistingEmail = authState.registrations.some(
+      (user) => user.email === formInput.email
+    );
+
+    if (isExistingEmail) {
+      setIsEmailExists(true);
+      return;
+    }
 
     if (
       formInput.name === "" ||
@@ -146,6 +158,9 @@ export default function Registration() {
                 <p className="text-red-500 font-bold">
                   Please enter a valid email address.
                 </p>
+              )}
+              {isEmailExists && (
+                <p className="text-red-500 font-black">Email already exists*</p>
               )}
               <div className="mt-2">
                 <input

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { registerUser } from "../../actions/action";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Registration() {
   const [formInput, setFormInput] = useState({
@@ -17,6 +17,7 @@ export default function Registration() {
 
   const [errorInput, setErrorInput] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onInputChange = (event) => {
     const nameData = event.target.name;
@@ -58,6 +59,7 @@ export default function Registration() {
       setErrorInput(false);
       dispatch(registerUser(formInput));
       alert("Registered successfully!");
+      navigate("/product");
       setFormInput({
         name: "",
         phone: "",

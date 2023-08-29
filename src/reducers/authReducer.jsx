@@ -27,6 +27,7 @@ const authReducer = (state = initialState, action) => {
           ...state,
           user: matchedUser,
           error: null,
+          isLoggedIn: true,
         };
       } else {
         return {

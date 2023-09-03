@@ -1,3 +1,8 @@
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../actions/action";
+import { useNavigate } from "react-router";
+import Addbutton from "../AddButton/Addbutton";
+
 const products = [
   {
     id: 1,
@@ -52,6 +57,13 @@ const products = [
 ];
 
 export default function Accessories() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    navigate("/AddToCart");
+    console.log("object656565", product);
+  };
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
@@ -71,6 +83,7 @@ export default function Accessories() {
               <p className="mt-1 text-lg font-medium text-gray-900">
                 {product.price}
               </p>
+              <Addbutton product={product} onclick={handleAddToCart} />
             </a>
           ))}
         </div>

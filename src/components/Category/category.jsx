@@ -39,7 +39,6 @@ const products = [
     price: "Shop Now",
     color: "Black",
   },
-  // More products...
 ];
 
 export default function Productlist() {

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { loginUser } from "../../actions/action";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
   const [loginInput, setLoginInput] = useState({
     email: "",
@@ -11,6 +11,7 @@ export default function Login() {
   const authState = useSelector((state) => state.authReducer);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onLoginInputChange = (e) => {
     const nameData = e.target.name;
     const valueData = e.target.value;
@@ -25,12 +26,25 @@ export default function Login() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    dispatch(loginUser(loginInput));
+    const { email, password } = loginInput;
+
+    if (email && password) {
+      dispatch(loginUser(loginInput));
+    }
     setLoginInput({
       email: "",
       password: "",
     });
   };
+
+  useEffect(() => {
+    if (authState.isLoggedIn) {
+      navigate("/product");
+    } else {
+      navigate("/login");
+    }
+  }, [authState.isLoggedIn, navigate]);
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

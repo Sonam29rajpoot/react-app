@@ -1,19 +1,20 @@
 const initialState = {
   user: null,
   error: null,
-  registrations: [],
+  registrations: JSON.parse(localStorage.getItem("registrations")) || [],
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case "REGISTER_USER":
-      // localStorage.setItem(
-      //   "auth",
-      //   JSON.stringify({ ...state, user: action.payload })
-      // );
+      const updatedRegistrations = [...state.registrations, action.payload];
+      localStorage.setItem(
+        "registrations",
+        JSON.stringify(updatedRegistrations)
+      );
       return {
         ...state,
-        registrations: [...state.registrations, action.payload],
+        registrations: updatedRegistrations,
         error: null,
       };
 
@@ -27,6 +28,7 @@ const authReducer = (state = initialState, action) => {
           ...state,
           user: matchedUser,
           error: null,
+          isLoggedIn: true,
         };
       } else {
         return {

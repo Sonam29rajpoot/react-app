@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { registerUser } from "../../actions/action";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Registration() {
   const [formInput, setFormInput] = useState({
@@ -11,17 +11,29 @@ export default function Registration() {
     password: "",
   });
 
+  const [isValidName, setIsValidName] = useState(true);
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isEmailExists, setIsEmailExists] = useState(false);
 
   const [errorInput, setErrorInput] = useState(false);
+
+  const authState = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onInputChange = (event) => {
     const nameData = event.target.name;
     const valueData = event.target.value;
 
+    if (nameData === "name") {
+      const isValidName =
+        /^[a-zA-Z0-9]+([a-zA-Z0-9](_|-| )[a-zA-Z0-9])*[a-zA-Z0-9]+$/.test(
+          valueData
+        );
+      setIsValidName(isValidName);
+    }
     if (nameData === "phone") {
       const isValidPhone = /^\d{10}$/.test(valueData);
       setIsPhoneValid(isValidPhone);
@@ -47,6 +59,15 @@ export default function Registration() {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
+    const isExistingEmail = authState.registrations.some(
+      (user) => user.email === formInput.email
+    );
+
+    if (isExistingEmail) {
+      setIsEmailExists(true);
+      return;
+    }
+
     if (
       formInput.name === "" ||
       formInput.phone === "" ||
@@ -58,6 +79,7 @@ export default function Registration() {
       setErrorInput(false);
       dispatch(registerUser(formInput));
       alert("Registered successfully!");
+      navigate("/product");
       setFormInput({
         name: "",
         phone: "",
@@ -97,6 +119,11 @@ export default function Registration() {
               >
                 Enter Your Name
               </label>
+              {!isValidName && (
+                <p className="text-red-500 font-bold">
+                  Cannot have a underscore, hypen or space at the start or end
+                </p>
+              )}
               <div className="mt-2">
                 <input
                   id="name"
@@ -104,6 +131,7 @@ export default function Registration() {
                   value={formInput.name}
                   type="text"
                   required
+                  maxLength="25"
                   onChange={onInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -144,6 +172,9 @@ export default function Registration() {
                 <p className="text-red-500 font-bold">
                   Please enter a valid email address.
                 </p>
+              )}
+              {isEmailExists && (
+                <p className="text-red-500 font-black">Email already exists*</p>
               )}
               <div className="mt-2">
                 <input
@@ -188,7 +219,12 @@ export default function Registration() {
             <div>
               <button
                 type="submit"
-                disabled={!isPhoneValid || !isEmailValid || !isPasswordValid}
+                disabled={
+                  !isValidName ||
+                  !isPhoneValid ||
+                  !isEmailValid ||
+                  !isPasswordValid
+                }
                 onClick={onSubmitHandler}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
@@ -199,7 +235,7 @@ export default function Registration() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             <Link
-              to="login"
+              to="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               already have an account ? Sign In

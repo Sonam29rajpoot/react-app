@@ -2,7 +2,7 @@ const products = [
   {
     id: 1,
     name: "Accessories",
-    href: "/Accessories",
+    href: "/categories/Accessories",
     price: "Shop Now",
     imageSrc:
       "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MR2U3ref_FV442_GEO_IN?wid=1420&hei=930&fmt=png-alpha&.v=1677267704914",
@@ -12,7 +12,7 @@ const products = [
   {
     id: 2,
     name: "Women T-Shirts",
-    href: "/WomenTShirts",
+    href: "/categories/WomenTShirts",
     price: "Shop Now",
     imageSrc:
       "https://assets.ajio.com/medias/sys_master/root/20221004/xOtJ/633b32f1aeb269659c22ee3a/-473Wx593H-441147534-lilac-MODEL.jpg",

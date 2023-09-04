@@ -5,9 +5,25 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  // const totalItem = useSelector((state) => state.cart.total_item);
+  // const allState = useSelector((state) => state);
+
+  // console.log(allState, "totalItem");
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(cartTotalItem());
+  // }, []);
+
+  const cart = useSelector((state) => state.cart.cart);
+  const totalQuantity = cart.reduce(
+    (initialVal, product) => initialVal + product.quantity,
+    0
+  );
 
   return (
     <div className="bg-white">
@@ -68,9 +84,10 @@ export default function Navbar() {
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="#" className="-m-2 flex items-center p-2">
+                  {/* {/* <a href="#"  */}
+                  <p className="-m-2 flex items-center p-2">
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png?20230723002237"
                       alt=""
                       className="block h-auto w-5 flex-shrink-0"
                     />
@@ -78,7 +95,8 @@ export default function Navbar() {
                       INDIA
                     </span>
                     <span className="sr-only">, change currency</span>
-                  </a>
+                  </p>
+                  {/* </a> */}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -100,14 +118,14 @@ export default function Navbar() {
 
             {/* Logo */}
             <div className="ml-4 flex lg:ml-0">
-              <a href="#">
-                <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8 w-auto"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkSeenCMOJii-F0MiUzKVOwBfB5HtrHEdJNAKKu7xoqxFHdl1PNwCsSCAQTqk4nZlp-RU&usqp=CAU"
-                  alt=""
-                />
-              </a>
+              {/* <a href="#"> */}
+              <span className="sr-only">Your Company</span>
+              <img
+                className="h-8 w-auto"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkSeenCMOJii-F0MiUzKVOwBfB5HtrHEdJNAKKu7xoqxFHdl1PNwCsSCAQTqk4nZlp-RU&usqp=CAU"
+                alt=""
+              />
+              {/* </a> */}
             </div>
             <div className="ml-auto flex items-center">
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
@@ -127,18 +145,17 @@ export default function Navbar() {
               </div>
 
               <div className="hidden lg:ml-8 lg:flex">
-                <a
-                  href="#"
-                  className="flex items-center text-gray-700 hover:text-gray-800"
-                >
+                {/* <a
+                  href="#" */}
+                <p className="flex items-center text-gray-700 hover:text-gray-800">
                   <img
-                    src="https://tailwindui.com/img/flags/flag-canada.svg"
+                    src="https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/1200px-Flag_of_India.svg.png?20230723002237"
                     alt=""
                     className="block h-auto w-5 flex-shrink-0"
                   />
                   <span className="ml-3 block text-sm font-medium">INDIA</span>
                   <span className="sr-only">, change currency</span>
-                </a>
+                </p>
               </div>
 
               {/* Cart */}
@@ -152,7 +169,8 @@ export default function Navbar() {
                     aria-hidden="true"
                   />
                   <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                    0
+                    {/* {totalItem} */}
+                    {totalQuantity}
                   </span>
                   <span className="sr-only">items in cart, view bag</span>
                 </a>

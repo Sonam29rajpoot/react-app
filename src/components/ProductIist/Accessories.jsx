@@ -2,64 +2,25 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../actions/action";
 import { useNavigate } from "react-router";
 import Addbutton from "../AddButton/Addbutton";
-
-const products = [
-  {
-    id: 1,
-    name: "Earthen Bottle",
-    href: "#",
-    price: "$48",
-    imageSrc:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MR2U3ref_FV442_GEO_IN?wid=1420&hei=930&fmt=png-alpha&.v=1677267704914",
-    imageAlt:
-      "Tall slender porcelain bottle with natural clay textured body and cork stopper.",
-  },
-  {
-    id: 2,
-    name: "Nomad Tumbler",
-    href: "#",
-    price: "$35",
-    imageSrc:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MNWP3_GEO_IN?wid=532&hei=582&fmt=png-alpha&.v=1678377335734",
-    imageAlt:
-      "Olive drab green insulated bottle with flared screw lid and flat top.",
-  },
-  {
-    id: 3,
-    name: "Focus Paper Refill",
-    href: "#",
-    price: "$89",
-    imageSrc:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MQU73?wid=532&hei=582&fmt=png-alpha&.v=1676920930838",
-    imageAlt:
-      "Person using a pen to cross a task off a productivity paper card.",
-  },
-  {
-    id: 4,
-    name: "Machined Mechanical Pencil",
-    href: "#",
-    price: "$35",
-    imageSrc:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MK0C2?wid=532&hei=582&fmt=png-alpha&.v=1564075356758",
-    imageAlt:
-      "Hand holding black machined steel mechanical pencil with brass tip and top.",
-  },
-  {
-    id: 5,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MU862?wid=532&hei=582&fmt=png-alpha&.v=1591824860000",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-];
+import { products } from "./data";
 
 export default function Accessories() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // switch(categorie){
+  //   case 'accesories':
+  //     setAccesories([{jk:"fjkd"}])
+  //     break;
+  //   default:
+  //     setData([])
+  //     break;
+  // }
+
+  // fetch('./getAccesries').then((res)=>setData(res.data.data))
   const handleAddToCart = (product) => {
+    console.log(product, "product");
+
     dispatch(addToCart(product));
     navigate("/AddToCart");
     console.log("object656565", product);

@@ -79,7 +79,7 @@ export default function Registration() {
       setErrorInput(false);
       dispatch(registerUser(formInput));
       alert("Registered successfully!");
-      navigate("/product");
+      navigate("/");
       setFormInput({
         name: "",
         phone: "",

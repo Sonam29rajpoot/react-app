@@ -19,11 +19,11 @@ function App() {
         <Routes>
         <Route path="/reg" element={<Registration />}/>
         <Route path="/login" element={<Login />}/>
-         <Route path="/product" element={<Productlist/>}/>
-         <Route path="/MenTShirts" element={<MenTShirts/>}/>
-         <Route path="/WomenTShirts" element={<WomenTShirts/>}/>
-         <Route path="/Accessories" element={<Accessories/>}/>
-         <Route path="/Kids" element={<Kids/>}/>
+         <Route path="/" element={<Productlist/>}/>
+         {/* <Route path="/MenTShirts" element={<MenTShirts/>}/> */}
+         <Route path="categories/:WomenTShirts" element={<WomenTShirts/>}/>
+         <Route path="categories/:Accessories" element={<Accessories/>}/>
+         {/* <Route path="/Kids" element={<Kids/>}/> */}
          <Route path="/AddToCart" element={<AddToCart/>}/>
         </Routes>
       </div>

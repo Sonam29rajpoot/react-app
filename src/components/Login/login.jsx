@@ -39,7 +39,7 @@ export default function Login() {
 
   useEffect(() => {
     if (authState.isLoggedIn) {
-      navigate("/product");
+      navigate("/");
     } else {
       navigate("/login");
     }

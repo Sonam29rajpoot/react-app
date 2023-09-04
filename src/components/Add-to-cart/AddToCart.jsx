@@ -8,13 +8,13 @@ import { removeFromCart, updateCartItemQty } from "../../actions/action";
 export default function AddToCart() {
   const [open, setOpen] = useState(true);
   const cart = useSelector((state) => state.cart.cart);
-  console.log("cart 11", cart);
+  console.log("cart ", cart);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const onClickHandler = () => {
     setOpen(false);
-    navigate("/product");
+    navigate("/");
   };
 
   const handleRemoveFromCart = (productId) => {
@@ -78,7 +78,7 @@ export default function AddToCart() {
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
-                            {cart.map((product) => (
+                            {cart?.map((product) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
@@ -159,9 +159,7 @@ export default function AddToCart() {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => (
-                              setOpen(false), navigate("/product")
-                            )}
+                            onClick={() => (setOpen(false), navigate("/"))}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>

@@ -1,5 +1,6 @@
 const initialStat = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
+  // total_item: "",
 };
 
 const cartReducer = (state = initialStat, action) => {
@@ -60,6 +61,20 @@ const cartReducer = (state = initialStat, action) => {
         ...state,
         cart: updatedcart,
       };
+
+    // case "CART_TOTAL_ITEM":
+    //   let updateItemVal = state.cart.reduce((initialVal, curElm) => {
+    //     let { quantity } = curElm;
+    //     initialVal = initialVal + quantity;
+    //     return initialVal;
+    //   }, 0);
+
+    //   // localStorage.setItem("cart", JSON.stringify({ ...state, updateItemVal }));
+    //   return {
+    //     ...state,
+    //     total_item: updateItemVal,
+    //   };
+
     default:
       return state;
   }

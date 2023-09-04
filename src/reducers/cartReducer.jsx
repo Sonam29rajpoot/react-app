@@ -5,15 +5,34 @@ const initialStat = {
 const cartReducer = (state = initialStat, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      localStorage.setItem(
-        "cart",
-        JSON.stringify([...state.cart, action.payload])
-      );
+      const { product } = action.payload;
+      const existingProduct = state.cart.find((item) => item.id === product.id);
 
-      return {
-        ...state,
-        cart: [...state.cart, action.payload],
-      };
+      if (existingProduct) {
+        const updatedCart = state.cart.map((item) => {
+          if (item.id === product.id) {
+            return {
+              ...item,
+              quantity: item.quantity + 1,
+            };
+          }
+          return item;
+        });
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+        return {
+          ...state,
+          cart: updatedCart,
+        };
+      } else {
+        const updatedCart = [...state.cart, { ...product, quantity: 1 }];
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        return {
+          ...state,
+          cart: updatedCart,
+        };
+      }
+
     case "REMOVE_FROM_CART":
       const updatedCart = state.cart.filter(
         (item) => item.id !== action.payload

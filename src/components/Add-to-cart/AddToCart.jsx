@@ -107,8 +107,7 @@ export default function AddToCart() {
                                       Qty
                                       <input
                                         type="number"
-                                        min="0"
-                                        max="5"
+                                        min="1"
                                         value={product.quantity}
                                         onChange={(e) =>
                                           handleQuantityUpdate(

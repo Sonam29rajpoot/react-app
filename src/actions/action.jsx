@@ -8,9 +8,9 @@ export const loginUser = (userData) => ({
   payload: userData,
 });
 
-export const addToCart = (product) => ({
+export const addToCart = (product, quantity) => ({
   type: "ADD_TO_CART",
-  payload: product,
+  payload: { product, quantity },
 });
 
 export const removeFromCart = (productId) => ({

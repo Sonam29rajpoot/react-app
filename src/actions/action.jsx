@@ -8,9 +8,9 @@ export const loginUser = (userData) => ({
   payload: userData,
 });
 
-export const addToCart = (product) => ({
+export const addToCart = (product, quantity) => ({
   type: "ADD_TO_CART",
-  payload: product,
+  payload: { product, quantity },
 });
 
 export const removeFromCart = (productId) => ({
@@ -18,7 +18,7 @@ export const removeFromCart = (productId) => ({
   payload: productId,
 });
 
-export const updateCartItemQty = (product) => ({
+export const updateCartItemQty = (productId, newQuantity) => ({
   type: "UPDATE_CART_ITEM",
-  payload: product,
+  payload: { productId, newQuantity },
 });

@@ -24,6 +24,23 @@ const cartReducer = (state = initialStat, action) => {
         cart: updatedCart,
       };
 
+    case "UPDATE_CART_ITEM":
+      const { productId, newQuantity } = action.payload;
+      const updatedcart = state.cart.map((item) => {
+        if (item.id === productId) {
+          return {
+            ...item,
+            quantity: newQuantity,
+          };
+        }
+        return item;
+      });
+      localStorage.setItem("cart", JSON.stringify(updatedcart));
+
+      return {
+        ...state,
+        cart: updatedcart,
+      };
     default:
       return state;
   }

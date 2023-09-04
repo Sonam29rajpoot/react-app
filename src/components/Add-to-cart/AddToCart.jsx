@@ -21,6 +21,10 @@ export default function AddToCart() {
     dispatch(removeFromCart(productId));
   };
 
+  const handleQuantityUpdate = (productId, newQuantity) => {
+    dispatch(updateCartItemQty(productId, newQuantity));
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -99,8 +103,20 @@ export default function AddToCart() {
                                     </p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500">
-                                      Qty {product.quantity}
+                                    <p className="text-gray-500 ">
+                                      Qty
+                                      <input
+                                        type="number"
+                                        min="0"
+                                        max="5"
+                                        value={product.quantity}
+                                        onChange={(e) =>
+                                          handleQuantityUpdate(
+                                            product.id,
+                                            parseInt(e.target.value)
+                                          )
+                                        }
+                                      />
                                     </p>
                                     <div className="flex">
                                       <button

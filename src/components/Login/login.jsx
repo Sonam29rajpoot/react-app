@@ -9,6 +9,7 @@ export default function Login() {
   });
 
   const authState = useSelector((state) => state.authReducer);
+  console.log("auth detail", authState);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ export default function Login() {
 
   useEffect(() => {
     if (authState.isLoggedIn) {
-      navigate("/");
+      navigate("/user/categorie/:productId");
     } else {
       navigate("/login");
     }
@@ -100,14 +101,7 @@ export default function Login() {
                 >
                   Password
                 </label>
-                <div className="text-sm">
-                  {/* <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a> */}
-                </div>
+                <div className="text-sm"></div>
               </div>
               <div className="mt-2">
                 <input
@@ -142,7 +136,7 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             <Link
-              to="/"
+              to="/reg"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               Don't have an account ? Sign Up

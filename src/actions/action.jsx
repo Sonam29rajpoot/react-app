@@ -1,16 +1,22 @@
 export const registerUser = (userData) => ({
   type: "REGISTER_USER",
-  payload: userData,
+  // payload: userData,
+  payload: { data: userData, userId: Math.random() * 1234 },
 });
 
 export const loginUser = (userData) => ({
   type: "LOGIN_USER",
   payload: userData,
 });
-
-export const addToCart = (product, quantity) => ({
+export const logout = () => {
+  localStorage.setItem("isLoggedIn", "false"); // Set isLoggedIn to false in localStorage
+  return {
+    type: "LOGOUT",
+  };
+};
+export const addToCart = (product, quantity, userId) => ({
   type: "ADD_TO_CART",
-  payload: { product, quantity },
+  payload: { product, quantity, userId },
 });
 
 export const removeFromCart = (productId) => ({

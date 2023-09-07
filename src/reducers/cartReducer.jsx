@@ -7,6 +7,8 @@ const cartReducer = (state = initialStat, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       const { product } = action.payload;
+      const userId = JSON.parse(localStorage.getItem("Userdetails"))[0].userId;
+      console.log(product, userId, "payload");
       const existingProduct = state.cart.find((item) => item.id === product.id);
 
       if (existingProduct) {
@@ -15,18 +17,23 @@ const cartReducer = (state = initialStat, action) => {
             return {
               ...item,
               quantity: item.quantity + 1,
+              userId: userId,
             };
           }
           return item;
         });
         localStorage.setItem("cart", JSON.stringify(updatedCart));
+        console.log("addtocart", product, userId, updatedCart);
 
         return {
           ...state,
           cart: updatedCart,
         };
       } else {
-        const updatedCart = [...state.cart, { ...product, quantity: 1 }];
+        const updatedCart = [
+          ...state.cart,
+          { ...product, quantity: 1, userId },
+        ];
         localStorage.setItem("cart", JSON.stringify(updatedCart));
         return {
           ...state,
@@ -61,19 +68,6 @@ const cartReducer = (state = initialStat, action) => {
         ...state,
         cart: updatedcart,
       };
-
-    // case "CART_TOTAL_ITEM":
-    //   let updateItemVal = state.cart.reduce((initialVal, curElm) => {
-    //     let { quantity } = curElm;
-    //     initialVal = initialVal + quantity;
-    //     return initialVal;
-    //   }, 0);
-
-    //   // localStorage.setItem("cart", JSON.stringify({ ...state, updateItemVal }));
-    //   return {
-    //     ...state,
-    //     total_item: updateItemVal,
-    //   };
 
     default:
       return state;

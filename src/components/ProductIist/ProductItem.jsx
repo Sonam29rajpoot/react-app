@@ -1,30 +1,29 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../actions/action";
 import { useNavigate } from "react-router";
 import Addbutton from "../AddButton/Addbutton";
-import { products } from "./data";
 
-export default function Accessories() {
+export default function ProductItem({ products }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const userId = useSelector((state) => state.authReducer.user?.userId);
 
-  // switch(categorie){
-  //   case 'accesories':
-  //     setAccesories([{jk:"fjkd"}])
-  //     break;
-  //   default:
-  //     setData([])
-  //     break;
-  // }
-
-  // fetch('./getAccesries').then((res)=>setData(res.data.data))
   const handleAddToCart = (product) => {
-    console.log(product, "product");
+    // Add the userId property to the product object
+    const productWithUserId = { ...product, userId };
 
-    dispatch(addToCart(product));
-    navigate("/AddToCart");
-    console.log("object656565", product);
+    console.log(productWithUserId, userId, "product");
+    dispatch(addToCart(productWithUserId));
+    navigate("/user/AddToCart");
+    console.log("object656565", productWithUserId, userId);
   };
+
+  // const handleAddToCart = (product) => {
+  //   console.log(product, userId, "product");
+  //   dispatch(addToCart(product, userId));
+  //   navigate("/user/AddToCart");
+  //   console.log("object656565", product, userId);
+  // };
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">

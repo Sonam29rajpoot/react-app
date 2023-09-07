@@ -10,11 +10,13 @@ export default function AddToCart() {
   const cart = useSelector((state) => state.cart.cart);
   console.log("cart ", cart);
   const dispatch = useDispatch();
-
+  let productId = "";
   const navigate = useNavigate();
+
   const onClickHandler = () => {
     setOpen(false);
-    navigate("/");
+    navigate("/user/categorie/:productId");
+    // navigate(`/user/categorie/${productId}`);
   };
 
   const handleRemoveFromCart = (productId) => {
@@ -159,7 +161,11 @@ export default function AddToCart() {
                           <button
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
-                            onClick={() => (setOpen(false), navigate("/"))}
+                            onClick={() => (
+                              setOpen(false),
+                              // navigate("/categorie/:productId")
+                              navigate(`/user/categorie/${productId}`)
+                            )}
                           >
                             Continue Shopping
                             <span aria-hidden="true"> &rarr;</span>

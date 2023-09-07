@@ -20,6 +20,7 @@ export default function Registration() {
   const [errorInput, setErrorInput] = useState(false);
 
   const authState = useSelector((state) => state.authReducer);
+  console.log("regiatration", authState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -79,7 +80,7 @@ export default function Registration() {
       setErrorInput(false);
       dispatch(registerUser(formInput));
       alert("Registered successfully!");
-      navigate("/");
+      navigate("/login");
       setFormInput({
         name: "",
         phone: "",

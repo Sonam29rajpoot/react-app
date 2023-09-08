@@ -11,7 +11,6 @@ export default function ProductItem({ products }) {
   const handleAddToCart = (product) => {
     // Add the userId property to the product object
     const productWithUserId = { ...product, userId };
-
     console.log(productWithUserId, userId, "product");
     dispatch(addToCart(productWithUserId));
     navigate("/user/AddToCart");

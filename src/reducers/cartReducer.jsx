@@ -1,6 +1,5 @@
 const initialStat = {
   cart: JSON.parse(localStorage.getItem("cart")) || [],
-  // total_item: "",
 };
 
 const cartReducer = (state = initialStat, action) => {

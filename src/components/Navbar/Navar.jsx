@@ -13,8 +13,8 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
   console.log("ab nya kuch", cart);
-  const userId = useSelector((state) => state.authReducer.user);
-  console.log(userId, "userid in auth");
+  // const userId = useSelector((state) => state.authReducer.user?.userId);
+  // console.log(userId, "userid in auth");
   const totalQuantity = cart.reduce(
     (initialVal, product) => initialVal + product.quantity,
     0

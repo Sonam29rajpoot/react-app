@@ -1,39 +1,60 @@
 const initialStat = {
-  cart: JSON.parse(localStorage.getItem("cart")) || [],
+  cart: JSON.parse(localStorage.getItem("Userdetails")) || [],
 };
 
 const cartReducer = (state = initialStat, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       const { product } = action.payload;
-      const userId = JSON.parse(localStorage.getItem("Userdetails"))[0].userId;
-      console.log(product, userId, "payload");
+      // const userId = JSON.parse(
+      //   localStorage.getItem("matchedCurrentUser")
+      // )?.userId;
+      // console.log(product, userId, "payload");
+      // const myCartList = state.cart.find(
+      //   (item) => item.userId === product.userId
+      // );
+      console.log("carttttttt16", state.cart);
       const existingProduct = state.cart.find((item) => item.id === product.id);
 
       if (existingProduct) {
+        const allUserDetails =
+          JSON.parse(localStorage.getItem("Userdetails")) || [];
         const updatedCart = state.cart.map((item) => {
           if (item.id === product.id) {
             return {
               ...item,
               quantity: item.quantity + 1,
-              userId: userId,
+              // userId: userId,
             };
           }
           return item;
         });
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-        console.log("addtocart", product, userId, updatedCart);
+        // let allUserDetails = JSON.parse(localStorage.getItem("Userdetails"));
 
+        // allUserDetails.forEach((userObject) => {
+        //   userObject["Cart"] = updatedCart;
+        // });
+
+        // localStorage.setItem("cartdetails", JSON.stringify(allUserDetails));
+
+        // console.log("Userdetails", product, updatedCart, allUserDetails);
+        allUserDetails.forEach((userObject) => {
+          if (!userObject["Cart"]) {
+            userObject["Cart"] = [];
+          }
+          userObject["Cart"].push(updatedCart);
+        });
+
+        localStorage.setItem("Userdetails", JSON.stringify(allUserDetails));
+
+        console.log("Userdetails", product, updatedCart, allUserDetails);
         return {
           ...state,
           cart: updatedCart,
         };
       } else {
-        const updatedCart = [
-          ...state.cart,
-          { ...product, quantity: 1, userId },
-        ];
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        const updatedCart = [...state.cart, { ...product, quantity: 1 }];
+        localStorage.setItem("Userdetails", JSON.stringify(updatedCart));
         return {
           ...state,
           cart: updatedCart,
@@ -44,7 +65,7 @@ const cartReducer = (state = initialStat, action) => {
       const updatedCart = state.cart.filter(
         (item) => item.id !== action.payload
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      localStorage.setItem("Userdetails", JSON.stringify(updatedCart));
       return {
         ...state,
         cart: updatedCart,
@@ -61,7 +82,7 @@ const cartReducer = (state = initialStat, action) => {
         }
         return item;
       });
-      localStorage.setItem("cart", JSON.stringify(updatedcart));
+      localStorage.setItem("Userdetails", JSON.stringify(updatedcart));
 
       return {
         ...state,

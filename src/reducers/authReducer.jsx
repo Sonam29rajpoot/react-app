@@ -18,34 +18,39 @@ const authReducer = (state = initialState, action) => {
         registrations: updatedRegistrations,
         error: null,
       };
-
     case "LOGIN_USER":
       const { email, password } = action.payload;
-      let matchedUser = false;
-      console.log("object", email, password, state.registrations);
-      if ((email, password)) {
-        matchedUser = state.registrations.find(
-          (value) =>
-            email == value.data.email && password == value.data.password
-        );
-        console.log("matchedUser", matchedUser);
-        // matchedUser =
-        //   email == state.registrations.data.email &&
-        //   password == state.registrations.data.password;
+      let matchedCurrentUser = {};
+      console.log("New one", email, password, state.registrations);
+      let isLoggedInFlag = false;
+      if (email && password) {
+        state.registrations.forEach((userDetails) => {
+          console.log(userDetails, "userDetails");
+          if (
+            userDetails.data.email === email &&
+            userDetails.data.password === password
+          ) {
+            matchedCurrentUser = userDetails.data;
+            isLoggedInFlag = true;
+          }
+        });
+        console.log("matchedCurrentUser", matchedCurrentUser);
       }
-      // state.registrations.data.email(
-      //   (user) => user.email === email && user.password === password
-      // );
-      if (matchedUser) {
-        localStorage.setItem("isLoggedIn", "true");
+
+      if (isLoggedInFlag) {
+        matchedCurrentUser["isLoggedIn"] = true;
+        localStorage.setItem(
+          "matchedCurrentUser",
+          JSON.stringify(matchedCurrentUser)
+        );
         return {
           ...state,
-          user: matchedUser,
+          user: matchedCurrentUser,
           error: null,
           isLoggedIn: true,
         };
       } else {
-        localStorage.removeItem("isLoggedIn");
+        // localStorage.removeItem("loggedInUser");
         return {
           ...state,
           user: null,
@@ -61,7 +66,7 @@ const authReducer = (state = initialState, action) => {
       };
     case "LOGOUT":
       console.log("working in logout");
-      localStorage.setItem("isLoggedIn", "false"); // Remove the isLoggedIn key
+      // localStorage.setItem("isLoggedIn", "false"); // Remove the isLoggedIn key
       return {
         ...state,
         user: null,

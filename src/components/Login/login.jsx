@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { loginUser } from "../../actions/action";
+import { loginUser, updateCart, cartTotalItem } from "../../actions/action";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
@@ -9,14 +9,12 @@ export default function Login() {
   });
 
   const authState = useSelector((state) => state.authReducer);
-  console.log("auth detail", authState);
-
+  console.log("auth detail", authState.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLoginInputChange = (e) => {
     const nameData = e.target.name;
     const valueData = e.target.value;
-    console.log("object", nameData, valueData);
     setLoginInput((preval) => {
       return {
         ...preval,
@@ -24,6 +22,13 @@ export default function Login() {
       };
     });
   };
+  // useEffect(() => {
+  //   if (JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart) {
+  //     dispatch(
+  //       updateCart(JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart)
+  //     );
+  //   }
+  // }, [authState.isLoggedIn]);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -31,6 +36,8 @@ export default function Login() {
 
     if (email && password) {
       dispatch(loginUser(loginInput));
+
+      // dispatch(cartUpdateOnLogin(authState.user.cart));
     }
     setLoginInput({
       email: "",

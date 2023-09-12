@@ -1,6 +1,6 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { logout } from "../../actions/action";
+import { logout, cartTotalItem } from "../../actions/action";
 import {
   Bars3Icon,
   ShoppingBagIcon,
@@ -12,23 +12,28 @@ import { useSelector } from "react-redux";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const cart = useSelector((state) => state.cart.cart);
-  console.log("ab nya kuch", cart);
-  // const userId = useSelector((state) => state.authReducer.user?.userId);
-  // console.log(userId, "userid in auth");
+  const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
+  const dispatch = useDispatch();
+
+  // console.log("ab nya kuch", cart);
+
+  useEffect(() => {
+    // dispatch(cartTotalItem());
+  }, [cart]);
+
   const totalQuantity = cart.reduce(
     (initialVal, product) => initialVal + product.quantity,
     0
   );
-  const dispatch = useDispatch();
+
   function logoutHandler(event) {
     event.preventDefault();
     dispatch(logout());
+    // dispatch(cartTotalItem());
   }
-  const isLoggedIn = useSelector((state) => state.authReducer.isLoggedIn);
 
   return (
     <div className="bg-white">
-      {/* Mobile menu */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child

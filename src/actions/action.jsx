@@ -32,3 +32,8 @@ export const updateCartItemQty = (productId, newQuantity) => ({
 export const cartTotalItem = () => ({
   type: "CART_TOTAL_ITEM",
 });
+
+export const updateCart = (products) => ({
+  type: "UPDATE_CART",
+  payload: { products },
+});

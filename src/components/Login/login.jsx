@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { loginUser, updateCart, cartTotalItem } from "../../actions/action";
+import { loginUser, updateCart } from "../../actions/action";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
@@ -22,14 +22,18 @@ export default function Login() {
       };
     });
   };
-  // useEffect(() => {
-  //   if (JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart) {
-  //     dispatch(
-  //       updateCart(JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart)
-  //     );
-  //   }
-  // }, [authState.isLoggedIn]);
-
+  useEffect(() => {
+    // console.log("useEffect working **********************", cart);
+    if (JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart) {
+      dispatch(
+        updateCart(JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart)
+      );
+      console.log("working in if condition");
+    } else {
+      dispatch(updateCart([]));
+      console.log("working in else condition");
+    }
+  }, [authState.user?.isLoggedIn]);
   const onSubmit = (event) => {
     event.preventDefault();
     const { email, password } = loginInput;

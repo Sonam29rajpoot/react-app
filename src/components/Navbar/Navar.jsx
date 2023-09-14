@@ -17,9 +17,9 @@ export default function Navbar() {
 
   // console.log("ab nya kuch", cart);
 
-  useEffect(() => {
-    // dispatch(cartTotalItem());
-  }, [cart]);
+  // useEffect(() => {
+  //   // dispatch(cartTotalItem());
+  // }, [cart]);
 
   const totalQuantity = cart.reduce(
     (initialVal, product) => initialVal + product.quantity,

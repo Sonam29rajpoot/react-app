@@ -1,43 +1,38 @@
 const initialStat = {
-  cart: JSON.parse(localStorage.getItem("cart")) || [],
+  cart: JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart || [],
 };
 
 const cartReducer = (state = initialStat, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       const { product } = action.payload;
-      const existingProduct = state.cart.find((item) => item.id === product.id);
-
-      if (existingProduct) {
-        const updatedCart = state.cart.map((item) => {
+      const currentUser = JSON.parse(
+        localStorage.getItem("matchedCurrentUser")
+      );
+      if (currentUser["cart"] != undefined) {
+        let hasItem = false;
+        currentUser.cart.map((item) => {
           if (item.id === product.id) {
-            return {
-              ...item,
-              quantity: item.quantity + 1,
-            };
+            item.quantity += 1;
+            hasItem = true;
           }
-          return item;
         });
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-
-        return {
-          ...state,
-          cart: updatedCart,
-        };
+        if (!hasItem) {
+          product.quantity = 1;
+          currentUser.cart = [...currentUser.cart, product];
+        }
       } else {
-        const updatedCart = [...state.cart, { ...product, quantity: 1 }];
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-        return {
-          ...state,
-          cart: updatedCart,
-        };
+        product.quantity = 1;
+        currentUser["cart"] = [product];
       }
-
+      localStorage.setItem("matchedCurrentUser", JSON.stringify(currentUser));
+      return { ...state, cart: currentUser.cart };
     case "REMOVE_FROM_CART":
       const updatedCart = state.cart.filter(
         (item) => item.id !== action.payload
       );
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      localStorage.setItem("Userdetails", JSON.stringify(updatedCart));
+      localStorage.removeItem("Userdetails");
       return {
         ...state,
         cart: updatedCart,
@@ -54,11 +49,17 @@ const cartReducer = (state = initialStat, action) => {
         }
         return item;
       });
-      localStorage.setItem("cart", JSON.stringify(updatedcart));
+      localStorage.setItem("Userdetails", JSON.stringify(updatedcart));
 
       return {
         ...state,
         cart: updatedcart,
+      };
+    case "UPDATE_CART":
+      const { products } = action.payload;
+      return {
+        ...state,
+        cart: products,
       };
     default:
       return state;

@@ -8,13 +8,15 @@ import { removeFromCart, updateCartItemQty } from "../../actions/action";
 export default function AddToCart() {
   const [open, setOpen] = useState(true);
   const cart = useSelector((state) => state.cart.cart);
-  console.log("cart 11", cart);
+  console.log("cart ", cart);
   const dispatch = useDispatch();
-
+  let productId = "";
   const navigate = useNavigate();
+
   const onClickHandler = () => {
     setOpen(false);
-    navigate("/product");
+    navigate("/user/categorie/:productId");
+    // navigate(`/user/categorie/${productId}`);
   };
 
   const handleRemoveFromCart = (productId) => {
@@ -42,7 +44,7 @@ export default function AddToCart() {
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full ">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -78,7 +80,7 @@ export default function AddToCart() {
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
-                            {cart.map((product) => (
+                            {cart?.map((product) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
@@ -88,7 +90,7 @@ export default function AddToCart() {
                                   />
                                 </div>
 
-                                <div className="ml-4 flex flex-1 flex-col">
+                                <div className="ml-3 flex flex-1 flex-col w-12">
                                   <div>
                                     <div className="flex justify-between text-base font-medium text-gray-900">
                                       <h3>
@@ -96,14 +98,14 @@ export default function AddToCart() {
                                           {product.name}
                                         </a>
                                       </h3>
-                                      <p className="ml-4">{product.price}</p>
+                                      <p className="ml-3">{product.price}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">
                                       {product.color}
                                     </p>
                                   </div>
                                   <div className="flex flex-1 items-end justify-between text-sm">
-                                    <p className="text-gray-500 ">
+                                    <p className="text-gray-500 w-5 ">
                                       Qty
                                       <input
                                         type="number"
@@ -160,7 +162,9 @@ export default function AddToCart() {
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                             onClick={() => (
-                              setOpen(false), navigate("/product")
+                              setOpen(false),
+                              // navigate("/categorie/:productId")
+                              navigate(`/user/categorie/${productId}`)
                             )}
                           >
                             Continue Shopping

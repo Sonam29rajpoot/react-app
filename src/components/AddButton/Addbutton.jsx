@@ -5,7 +5,6 @@ function Addbutton({ product, onclick }) {
     <button
       size="small"
       style={{ backgroundColor: "cadetblue", color: "black" }}
-      //   onClick={() => handleAddToCart(product)}
       onClick={() => onclick(product)}
     >
       ADD TO CARD

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { loginUser } from "../../actions/action";
+import { loginUser, updateCart } from "../../actions/action";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
@@ -9,13 +9,12 @@ export default function Login() {
   });
 
   const authState = useSelector((state) => state.authReducer);
-
+  console.log("auth detail", authState.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLoginInputChange = (e) => {
     const nameData = e.target.name;
     const valueData = e.target.value;
-    console.log("object", nameData, valueData);
     setLoginInput((preval) => {
       return {
         ...preval,
@@ -23,13 +22,26 @@ export default function Login() {
       };
     });
   };
-
+  useEffect(() => {
+    // console.log("useEffect working **********************", cart);
+    if (JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart) {
+      dispatch(
+        updateCart(JSON.parse(localStorage.getItem("matchedCurrentUser"))?.cart)
+      );
+      console.log("working in if condition");
+    } else {
+      dispatch(updateCart([]));
+      console.log("working in else condition");
+    }
+  }, [authState.user?.isLoggedIn]);
   const onSubmit = (event) => {
     event.preventDefault();
     const { email, password } = loginInput;
 
     if (email && password) {
       dispatch(loginUser(loginInput));
+
+      // dispatch(cartUpdateOnLogin(authState.user.cart));
     }
     setLoginInput({
       email: "",
@@ -39,7 +51,7 @@ export default function Login() {
 
   useEffect(() => {
     if (authState.isLoggedIn) {
-      navigate("/product");
+      navigate("/user/categorie/:productId");
     } else {
       navigate("/login");
     }
@@ -100,14 +112,7 @@ export default function Login() {
                 >
                   Password
                 </label>
-                <div className="text-sm">
-                  {/* <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a> */}
-                </div>
+                <div className="text-sm"></div>
               </div>
               <div className="mt-2">
                 <input
@@ -142,7 +147,7 @@ export default function Login() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             <Link
-              to="/"
+              to="/reg"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               Don't have an account ? Sign Up
